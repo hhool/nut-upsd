@@ -30,7 +30,15 @@ RUN set -ex; \
 	wget http://www.networkupstools.org/source/2.8/nut-$NUT_VERSION.tar.gz; \
 	tar xfz nut-$NUT_VERSION.tar.gz; \
 	cd nut-$NUT_VERSION \
-	; \
+	;
+
+COPY src/001_subdriver_zspace_U2600.patch /tmp/nut-$NUT_VERSION/
+
+RUN set -ex; \
+	cd /tmp/nut-$NUT_VERSION; \
+	which patch; \
+	# patch
+	patch -p1 < /tmp/nut-$NUT_VERSION/001_subdriver_zspace_U2600.patch; \
 	# build
 	./configure \
 		--prefix=/usr \
